@@ -33,11 +33,9 @@ let Healthcheck
 
 let Labels : Type = < Object : Map Text Text | List : List Text >
 
-let Options: Type = Map Text (Optional StringOrNumber)
+let Options : Type = Map Text (Optional StringOrNumber)
 
-let Logging
-    : Type
-    = { driver : Text, options : Optional Options }
+let Logging : Type = { driver : Text, options : Optional Options }
 
 let Networks
     : Type
@@ -186,27 +184,27 @@ let Service
           Optional Text
       }
 
-let DriverOpts: Type = Map Text StringOrNumber
+let DriverOpts : Type = Map Text StringOrNumber
 
-let Ipam: Type = { driver : Text, config : List { subnet : Text } }
+let Ipam : Type = { driver : Text, config : List { subnet : Text } }
 
-let External :Type = < Bool : Bool | Object : { name : Text } >
+let External : Type = < Bool : Bool | Object : { name : Text } >
 
 let Volume
     : Type
     = { driver :
           Optional Text
-      , driver_opts : Optional DriverOpts
-
-      , ipam : Optional Ipam
-
-      , external : Optional External
-
+      , driver_opts :
+          Optional DriverOpts
+      , ipam :
+          Optional Ipam
+      , external :
+          Optional External
       }
 
 let Volumes : Type = Map Text (Optional Volume)
 
-let Services: Type = Map Text Service
+let Services : Type = Map Text Service
 
 let ComposeConfig
     : Type
@@ -220,4 +218,42 @@ let ComposeConfig
           Optional Volumes
       }
 
-in  { ComposeConfig = ComposeConfig, Services = Services, Service = Service, StringOrNumber  = StringOrNumber, Deploy = Deploy, Build = Build, StringOrList = StringOrList, ListOrDict = ListOrDict, Healthcheck = Healthcheck, Labels = Labels, Logging = Logging, Networks = Networks, Ulimits= Ulimits, Volumes = Volumes, Volume = Volume, Options = Options, DriverOpts = DriverOpts, Ipam = Ipam, External = External}
+in  { ComposeConfig =
+        ComposeConfig
+    , Services =
+        Services
+    , Service =
+        Service
+    , StringOrNumber =
+        StringOrNumber
+    , Deploy =
+        Deploy
+    , Build =
+        Build
+    , StringOrList =
+        StringOrList
+    , ListOrDict =
+        ListOrDict
+    , Healthcheck =
+        Healthcheck
+    , Labels =
+        Labels
+    , Logging =
+        Logging
+    , Networks =
+        Networks
+    , Ulimits =
+        Ulimits
+    , Volumes =
+        Volumes
+    , Volume =
+        Volume
+    , Options =
+        Options
+    , DriverOpts =
+        DriverOpts
+    , Ipam =
+        Ipam
+    , External =
+        External
+    }
