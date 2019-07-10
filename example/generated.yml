@@ -50,6 +50,7 @@ services:
     logging:
       driver: syslog
       options:
+        tag: '{{.Name}}'
         syslog-address: udp://logs.papertrailapp.com:50183
   django:
     env_file:

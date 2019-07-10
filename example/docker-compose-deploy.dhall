@@ -1,3 +1,9 @@
+let map =
+      https://raw.githubusercontent.com/dhall-lang/dhall-lang/master/Prelude/List/map
+
+let Entry =
+      https://raw.githubusercontent.com/dhall-lang/dhall-lang/master/Prelude/Map/Entry
+
 let types = ./compose/v3/types.dhall
 
 let defaults = ./compose/v3/defaults.dhall
@@ -78,7 +84,8 @@ let dbService =
               )
           , ports =
               Some [ types.StringOrNumber.String "5432:5432" ]
-          , logging = logging
+          , logging =
+              logging
           , volumes =
               Some [ "pgdata:/var/lib/postgresql/data/" ]
           }
@@ -99,24 +106,23 @@ let reactService =
           }
       : types.Service
 
+let toEntry =
+        λ(name : Text)
+      → { mapKey =
+            name
+        , mapValue =
+            Some (defaults.Volume ⫽ { driver = Some "local" })
+        }
+
+let Output : Type = Entry Text (Optional types.Volume)
+
 let volumes
     : types.Volumes
-    = [ { mapKey =
-            "pgdata"
-        , mapValue =
-            Some (defaults.Volume ⫽ { driver = Some "local" })
-        }
-      , { mapKey =
-            "django-static-files"
-        , mapValue =
-            Some (defaults.Volume ⫽ { driver = Some "local" })
-        }
-      , { mapKey =
-            "react-static-files"
-        , mapValue =
-            Some (defaults.Volume ⫽ { driver = Some "local" })
-        }
-      ]
+    = map
+      Text
+      Output
+      toEntry
+      [ "pgdata", "django-static-files", "react-static-files" ]
 
 let services
     : types.Services
