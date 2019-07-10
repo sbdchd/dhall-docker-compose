@@ -35,7 +35,7 @@ in defaults.ComposeConfig // {
 2. generate yaml
 
 ```sh
-dhall-to-yaml < "example/docker-compose-deploy.dhall" --explain --omitNull > ./example/generated.yml
+dhall-to-yaml < "example/docker-compose-deploy.dhall" --explain --omitNull > ./example/docker-compose-deploy.yml
 ```
 
 Note that the yaml keys are alphabetized in the generated yaml.
