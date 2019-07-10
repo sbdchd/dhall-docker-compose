@@ -1,0 +1,68 @@
+version: '3'
+volumes:
+  django-static-files:
+    driver: local
+  pgdata:
+    driver: local
+  react-static-files:
+    driver: local
+services:
+  nginx:
+    image: recipeyak/nginx:latest
+    ports:
+    - 80:80
+    volumes:
+    - react-static-files:/var/app/dist
+    - django-static-files:/var/app/django/static
+    depends_on:
+    - django
+    - react
+    logging:
+      driver: syslog
+      options:
+        tag: '{{.Name}}'
+        syslog-address: udp://logs.papertrailapp.com:50183
+  react:
+    env_file:
+    - .env-production
+    image: recipeyak/react:latest
+    command: sh bootstrap.sh
+    volumes:
+    - react-static-files:/var/app/dist
+    logging:
+      driver: syslog
+      options:
+        tag: '{{.Name}}'
+        syslog-address: udp://logs.papertrailapp.com:50183
+  db:
+    image: postgres:10.1
+    command:
+    - -c
+    - shared_preload_libraries="pg_stat_statements"
+    - -c
+    - pg_stat_statements.max=10000
+    - -c
+    - pg_stat_statements.track=all
+    ports:
+    - 5432:5432
+    volumes:
+    - pgdata:/var/lib/postgresql/data/
+    logging:
+      driver: syslog
+      options:
+        syslog-address: udp://logs.papertrailapp.com:50183
+  django:
+    env_file:
+    - .env-production
+    image: recipeyak/django:latest
+    command: sh bootstrap-prod.sh
+    restart: always
+    volumes:
+    - django-static-files:/var/app/static-files
+    depends_on:
+    - db
+    logging:
+      driver: syslog
+      options:
+        tag: '{{.Name}}'
+        syslog-address: udp://logs.papertrailapp.com:50183
