@@ -1,6 +1,6 @@
 # dhall-docker-compose
 
-> A library for written [Docker Compose](https://docs.docker.com/compose/)
+> A library for writing [Docker Compose](https://docs.docker.com/compose/)
 > files in [Dhall](https://dhall-lang.org).
 
 **Note:** Only version 3.0 of the Docker Compose config is supported currently.
