@@ -2,6 +2,28 @@ let types = ./compose/v3/types.dhall
 
 let defaults = ./compose/v3/defaults.dhall
 
+let logging =
+      Some
+      { driver =
+          "syslog"
+      , options =
+          Some
+          [ { mapKey =
+                "syslog-address"
+            , mapValue =
+                Some
+                ( types.StringOrNumber.String
+                  "udp://logs.papertrailapp.com:50183"
+                )
+            }
+          , { mapKey =
+                "tag"
+            , mapValue =
+                Some (types.StringOrNumber.String "{{.Name}}")
+            }
+          ]
+      }
+
 let nginxService =
           defaults.Service
         ⫽ { image =
@@ -14,26 +36,7 @@ let nginxService =
               , "django-static-files:/var/app/django/static"
               ]
           , logging =
-              Some
-              { driver =
-                  "syslog"
-              , options =
-                  Some
-                  [ { mapKey =
-                        "syslog-address"
-                    , mapValue =
-                        Some
-                        ( types.StringOrNumber.String
-                          "udp://logs.papertrailapp.com:50183"
-                        )
-                    }
-                  , { mapKey =
-                        "tag"
-                    , mapValue =
-                        Some (types.StringOrNumber.String "{{.Name}}")
-                    }
-                  ]
-              }
+              logging
           , depends_on =
               Some [ "django", "react" ]
           }
@@ -52,26 +55,7 @@ let djangoService =
           , volumes =
               Some [ "django-static-files:/var/app/static-files" ]
           , logging =
-              Some
-              { driver =
-                  "syslog"
-              , options =
-                  Some
-                  [ { mapKey =
-                        "syslog-address"
-                    , mapValue =
-                        Some
-                        ( types.StringOrNumber.String
-                          "udp://logs.papertrailapp.com:50183"
-                        )
-                    }
-                  , { mapKey =
-                        "tag"
-                    , mapValue =
-                        Some (types.StringOrNumber.String "{{.Name}}")
-                    }
-                  ]
-              }
+              logging
           , depends_on =
               Some [ "db" ]
           }
@@ -94,22 +78,7 @@ let dbService =
               )
           , ports =
               Some [ types.StringOrNumber.String "5432:5432" ]
-          , logging =
-              Some
-              { driver =
-                  "syslog"
-              , options =
-                  Some
-                  [ { mapKey =
-                        "syslog-address"
-                    , mapValue =
-                        Some
-                        ( types.StringOrNumber.String
-                          "udp://logs.papertrailapp.com:50183"
-                        )
-                    }
-                  ]
-              }
+          , logging = logging
           , volumes =
               Some [ "pgdata:/var/lib/postgresql/data/" ]
           }
@@ -126,26 +95,7 @@ let reactService =
           , volumes =
               Some [ "react-static-files:/var/app/dist" ]
           , logging =
-              Some
-              { driver =
-                  "syslog"
-              , options =
-                  Some
-                  [ { mapKey =
-                        "syslog-address"
-                    , mapValue =
-                        Some
-                        ( types.StringOrNumber.String
-                          "udp://logs.papertrailapp.com:50183"
-                        )
-                    }
-                  , { mapKey =
-                        "tag"
-                    , mapValue =
-                        Some (types.StringOrNumber.String "{{.Name}}")
-                    }
-                  ]
-              }
+              logging
           }
       : types.Service
 
