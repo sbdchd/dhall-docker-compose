@@ -12,7 +12,7 @@ let Build
     = < String :
           Text
       | Object :
-          { context : Text, Dockerfile : Text, args : ListOrDict }
+          { context : Text, dockerfile : Text, args : ListOrDict }
       >
 
 let StringOrList : Type = < String : Text | List : List Text >
