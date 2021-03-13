@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -eux
+
+dhall format --check --transitive compose/v3/package.dhall
