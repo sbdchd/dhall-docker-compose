@@ -13,8 +13,21 @@ jobs:
           name: lint
           command: ./s/lint
 
+  test:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout
+      - run:
+          name: install deps
+          command: ./s/install
+      - run:
+          name: test
+          command: ./s/test
+
 workflows:
   version: 2
   test:
     jobs:
       - lint
+      - test
