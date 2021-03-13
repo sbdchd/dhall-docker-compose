@@ -14,7 +14,7 @@ main() {
 
   for url in "${URLS[@]}"; do
     download_name="download.tar.bz2"
-    curl -LO "${url}" -o "${download_name}"
+    curl -L "${url}" -o "${download_name}"
     tar xf "${download_name}" ./bin
     cp ./bin/* ~/.local/bin
     rm -rf ./bin "${download_name}"
