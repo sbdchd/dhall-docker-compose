@@ -1,17 +1,21 @@
 #!/bin/bash
 
-readonly VERSION="1.38.0"
+URLS = (
+    "https://github.com/dhall-lang/dhall-haskell/releases/download/1.38.0/dhall-1.38.0-x86_64-linux.tar.bz2"
+    "https://github.com/dhall-lang/dhall-haskell/releases/download/1.38.0/dhall-json-1.7.5-x86_64-linux.tar.bz2"
+)
 
 # CI install
 
 main() {
   mkdir -p ~/.local/bin
 
-  for package_name in dhall dhall-json; do
-    curl -LO "https://github.com/dhall-lang/dhall-haskell/releases/download/${VERSION}/${package_name}-${VERSION}-x86_64-linux.tar.bz2"
-    tar xf "${package_name}-${VERSION}-x86_64-linux.tar.bz2" ./bin
+  for url in "${URLS[@]}"; do
+    download_name="download.tar.bz2"
+    curl -LO "${url}" "${download_name}"
+    tar xf "${download_name}" ./bin
     cp ./bin/* ~/.local/bin
-    rm -rf ./bin
+    rm -rf ./bin "${download_name}"
   done
 }
 
