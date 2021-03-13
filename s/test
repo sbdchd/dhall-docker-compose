@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -eux
+
+readonly TEMP_DIR=$(mktemp -d)
+
+readonly OUT="${TEMP_DIR}/docker-compose-deploy.yml"
+
+dhall-to-yaml --file "./example/docker-compose-deploy.dhall" --output "${OUT}" --explain
+
+diff "${OUT}" "./example/docker-compose-deploy.yml"
