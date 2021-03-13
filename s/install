@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eux
+
 readonly URLS=(
     "https://github.com/dhall-lang/dhall-haskell/releases/download/1.38.0/dhall-1.38.0-x86_64-linux.tar.bz2"
     "https://github.com/dhall-lang/dhall-haskell/releases/download/1.38.0/dhall-json-1.7.5-x86_64-linux.tar.bz2"
@@ -12,7 +14,7 @@ main() {
 
   for url in "${URLS[@]}"; do
     download_name="download.tar.bz2"
-    curl -LO "${url}" "${download_name}"
+    curl -LO "${url}" -o "${download_name}"
     tar xf "${download_name}" ./bin
     cp ./bin/* ~/.local/bin
     rm -rf ./bin "${download_name}"
