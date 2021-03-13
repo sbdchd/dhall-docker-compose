@@ -18,12 +18,11 @@ To experiment with Dhall for config.
 ```dhall
 -- for the imports in your docker-compose.dhall file you should either download
 -- the dhall files or use the URL imports.
-let types = ./compose/v3/types.dhall
-let defaults = ./compose/v3/defaults.dhall
+let Compose = ./compose/v3/package.dhall
 
-in defaults.ComposeConfig // {
+in Compose.Config::{
   -- your config here
-} : types.ComposeConfig
+}
 ```
 
 ## Dev
@@ -35,7 +34,7 @@ in defaults.ComposeConfig // {
 2. generate yaml
 
 ```sh
-dhall-to-yaml < "example/docker-compose-deploy.dhall" --explain --omitNull > ./example/docker-compose-deploy.yml
+dhall-to-yaml --file example/docker-compose-deploy.dhall --output ./example/docker-compose-deploy.yml --explain
 ```
 
 Note that the yaml keys are alphabetized in the generated yaml.
