@@ -7,6 +7,12 @@ services:
       - pg_stat_statements.max=10000
       - "-c"
       - pg_stat_statements.track=all
+    healthcheck:
+      disable: false
+      interval: "30s"
+      retries: 3
+      test: checkpg.sh
+      timeout: "30s"
     image: postgres:10.1
     logging:
       driver: syslog
