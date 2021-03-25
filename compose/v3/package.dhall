@@ -7,4 +7,6 @@ in    types
       , Volume = { Type = types.Volume, default = defaults.Volume }
       , Config =
         { Type = types.ComposeConfig, default = defaults.ComposeConfig }
+      , Healthcheck =
+        { Type = types.Healthcheck, default = defaults.Healthcheck }
       }

@@ -21,11 +21,11 @@ let StringOrList
 
 let Healthcheck
     : Type
-    = { disable : Bool
-      , interval : Text
-      , retries : Natural
-      , test : StringOrList
-      , timeout : Text
+    = { disable : Optional Bool
+      , interval : Optional Text
+      , retries : Optional Natural
+      , test : Optional StringOrList
+      , timeout : Optional Text
       }
 
 let Labels

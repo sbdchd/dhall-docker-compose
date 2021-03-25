@@ -61,12 +61,9 @@ let dbService =
       , ports = Some [ Compose.StringOrNumber.String "5432:5432" ]
       , volumes = Some [ "pgdata:/var/lib/postgresql/data/" ]
       , logging
-      , healthcheck = Some
-        { test = Compose.StringOrList.String "checkpg.sh"
-        , timeout = "30s"
-        , interval = "30s"
-        , retries = 3
-        , disable = False
+      , healthcheck = Some Compose.Healthcheck::{
+        , test = Some (Compose.StringOrList.String "checkpg.sh")
+        , timeout = Some "10s"
         }
       }
 
