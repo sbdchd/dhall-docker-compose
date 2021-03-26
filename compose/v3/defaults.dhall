@@ -61,6 +61,15 @@ let Volume =
         }
       : types.Volume
 
+let Healthcheck =
+        { disable = None Bool
+        , interval = None Text
+        , retries = None Natural
+        , test = None types.StringOrList
+        , timeout = None Text
+        }
+      : types.Healthcheck
+
 let ComposeConfig =
         { version = "3"
         , services = None types.Services
@@ -69,4 +78,4 @@ let ComposeConfig =
         }
       : types.ComposeConfig
 
-in  { Service, Volume, ComposeConfig }
+in  { Service, Volume, ComposeConfig, Healthcheck }

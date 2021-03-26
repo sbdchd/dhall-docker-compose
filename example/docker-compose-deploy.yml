@@ -7,6 +7,9 @@ services:
       - pg_stat_statements.max=10000
       - "-c"
       - pg_stat_statements.track=all
+    healthcheck:
+      test: checkpg.sh
+      timeout: "10s"
     image: postgres:10.1
     logging:
       driver: syslog
