@@ -12,7 +12,12 @@ let ListOrDict
 let Build
     : Type
     = < String : Text
-      | Object : { context : Text, dockerfile : Text, args : ListOrDict }
+      | Object :
+          { context : Text
+          , dockerfile : Text
+          , args : ListOrDict
+          , ssh : ListOrDict
+          }
       >
 
 let StringOrList

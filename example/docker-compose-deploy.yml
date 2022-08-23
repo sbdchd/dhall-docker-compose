@@ -1,4 +1,11 @@
 services:
+  buildStub:
+    build:
+      args: []
+      context: '.'
+      dockerfile: DockerfileStub
+      ssh:
+        - default
   db:
     command:
       - "-c"

@@ -76,6 +76,22 @@ let reactService =
       , logging
       }
 
+let buildStubService =
+      Compose.Service::{
+      , build = Some
+          ( Compose.Build.Object
+              { dockerfile = "DockerfileStub"
+              , context = "."
+              , args =
+                  Compose.ListOrDict.List
+                    ([] : List (Optional Compose.StringOrNumber))
+              , ssh =
+                  Compose.ListOrDict.List
+                    [ Some (Compose.StringOrNumber.String "default") ]
+              }
+          )
+      }
+
 let toEntry =
       \(name : Text) ->
         { mapKey = name
@@ -101,6 +117,7 @@ let services
         , db = dbService
         , react = reactService
         , django = djangoService
+        , buildStub = buildStubService
         }
 
 in  Compose.Config::{ services = Some services, volumes = Some volumes }
