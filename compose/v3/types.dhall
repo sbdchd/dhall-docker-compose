@@ -48,6 +48,7 @@ let Logging
 let Networks
     : Type
     = < List : List Text
+      | Map : Map Text { name : Optional Text, external : Optional Bool }
       | Object :
           Optional
             { aliases : List Text, ipv4_address : Text, ipv6_address : Text }
