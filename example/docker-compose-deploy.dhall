@@ -27,8 +27,8 @@ let nginxService =
       , image = Some "recipeyak/nginx:latest"
       , ports = Some [ Compose.StringOrNumber.String "80:80" ]
       , volumes = Some
-        [ "react-static-files:/var/app/dist"
-        , "django-static-files:/var/app/django/static"
+        [ Compose.ServiceVolume.Short "react-static-files:/var/app/dist"
+        , Compose.ServiceVolume.Short "django-static-files:/var/app/django/static"
         ]
       , logging
       , depends_on = Some [ "django", "react" ]
@@ -40,7 +40,7 @@ let djangoService =
       , image = Some "recipeyak/django:latest"
       , env_file = Some (Compose.StringOrList.List [ ".env-production" ])
       , command = Some (Compose.StringOrList.String "sh bootstrap-prod.sh")
-      , volumes = Some [ "django-static-files:/var/app/static-files" ]
+      , volumes = Some [ Compose.ServiceVolume.Short "django-static-files:/var/app/static-files" ]
       , logging
       , depends_on = Some [ "db" ]
       }
@@ -59,7 +59,7 @@ let dbService =
               ]
           )
       , ports = Some [ Compose.StringOrNumber.String "5432:5432" ]
-      , volumes = Some [ "pgdata:/var/lib/postgresql/data/" ]
+      , volumes = Some [ Compose.ServiceVolume.Short "pgdata:/var/lib/postgresql/data/" ]
       , logging
       , healthcheck = Some Compose.Healthcheck::{
         , test = Some (Compose.StringOrList.String "checkpg.sh")
@@ -72,7 +72,7 @@ let reactService =
       , image = Some "recipeyak/react:latest"
       , command = Some (Compose.StringOrList.String "sh bootstrap.sh")
       , env_file = Some (Compose.StringOrList.List [ ".env-production" ])
-      , volumes = Some [ "react-static-files:/var/app/dist" ]
+      , volumes = Some [ Compose.ServiceVolume.Short "react-static-files:/var/app/dist" ]
       , logging
       }
 
