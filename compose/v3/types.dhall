@@ -84,6 +84,21 @@ let Deploy
       , placement : { constraints : List Text }
       }
 
+let ServiceVolumeLong
+    : Type
+    = { type : Optional Text
+      , source : Optional Text
+      , target : Optional Text
+      , read_only : Optional Bool
+      , bind : Optional { propagation : Optional Text }
+      , volume : Optional { nocopy : Optional Bool }
+      , tmpfs : Optional { size : Optional Text }
+      }
+
+let ServiceVolume
+    : Type
+    = < Short : Text | Long : ServiceVolumeLong >
+
 let Service
     : Type
     = { deploy : Optional Deploy
@@ -130,7 +145,7 @@ let Service
       , ulimits : Optional (Map Text Ulimits)
       , user : Optional Text
       , userns_mode : Optional Text
-      , volumes : Optional (List Text)
+      , volumes : Optional (List ServiceVolume)
       , working_dir : Optional Text
       }
 
@@ -173,6 +188,8 @@ let ComposeConfig
 in  { ComposeConfig
     , Services
     , Service
+    , ServiceVolume
+    , ServiceVolumeLong
     , StringOrNumber
     , Deploy
     , Build

@@ -3,6 +3,16 @@ let Map =
 
 let types = ./types.dhall
 
+let ServiceVolumeLong =
+      { type = None Text
+      , source = None Text
+      , target = None Text
+      , read_only = None Bool
+      , bind = None { propagation : Optional Text }
+      , volume = None { nocopy : Optional Bool }
+      , tmpfs = None { size : Optional Text }
+      }
+
 let Service =
         { deploy = None types.Deploy
         , build = None types.Build
@@ -48,7 +58,7 @@ let Service =
         , ulimits = None (Map Text types.Ulimits)
         , user = None Text
         , userns_mode = None Text
-        , volumes = None (List Text)
+        , volumes = None (List types.ServiceVolume)
         , working_dir = None Text
         }
       : types.Service
@@ -78,4 +88,4 @@ let ComposeConfig =
         }
       : types.ComposeConfig
 
-in  { Service, Volume, ComposeConfig, Healthcheck }
+in  { ServiceVolumeLong, Service, Volume, ComposeConfig, Healthcheck }
