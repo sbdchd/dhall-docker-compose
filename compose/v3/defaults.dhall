@@ -13,6 +13,12 @@ let ServiceVolumeLong =
       , tmpfs = None { size : Optional Text }
       }
 
+let ServiceNetwork =
+      { aliases = None (List Text)
+      , ipv4_address = None Text
+      , ipv6_address = None Text
+      }
+
 let Service =
         { deploy = None types.Deploy
         , build = None types.Build
@@ -41,7 +47,7 @@ let Service =
         , logging = None types.Logging
         , mac_address = None Text
         , network_mode = None Text
-        , networks = None types.Networks
+        , networks = None types.ServiceNetworks
         , pid = None Text
         , ports = None (List types.StringOrNumber)
         , privileged = None Bool
@@ -62,6 +68,8 @@ let Service =
         , working_dir = None Text
         }
       : types.Service
+
+let Network = { external = None Bool, name = None Text }
 
 let Volume =
         { driver = None Text
@@ -88,4 +96,11 @@ let ComposeConfig =
         }
       : types.ComposeConfig
 
-in  { ServiceVolumeLong, Service, Volume, ComposeConfig, Healthcheck }
+in  { ServiceVolumeLong
+    , ServiceNetwork
+    , Service
+    , Network
+    , Volume
+    , ComposeConfig
+    , Healthcheck
+    }
