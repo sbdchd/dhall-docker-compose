@@ -45,14 +45,13 @@ let Logging
     : Type
     = { driver : Text, options : Optional Options }
 
+let Network
+    : Type
+    = { external : Optional Bool, name : Optional Text }
+
 let Networks
     : Type
-    = < List : List Text
-      | Map : Map Text { name : Optional Text, external : Optional Bool }
-      | Object :
-          Optional
-            { aliases : List Text, ipv4_address : Text, ipv6_address : Text }
-      >
+    = < List : List Text | Map : Map Text Network >
 
 let Ulimits
     : Type
@@ -99,6 +98,17 @@ let ServiceVolume
     : Type
     = < Short : Text | Long : ServiceVolumeLong >
 
+let ServiceNetwork
+    : Type
+    = { aliases : Optional (List Text)
+      , ipv4_address : Optional Text
+      , ipv6_address : Optional Text
+      }
+
+let ServiceNetworks
+    : Type
+    = < List : List Text | Map : Map Text ServiceNetwork >
+
 let Service
     : Type
     = { deploy : Optional Deploy
@@ -128,7 +138,7 @@ let Service
       , logging : Optional Logging
       , mac_address : Optional Text
       , network_mode : Optional Text
-      , networks : Optional Networks
+      , networks : Optional ServiceNetworks
       , pid : Optional Text
       , ports : Optional (List StringOrNumber)
       , privileged : Optional Bool
@@ -190,6 +200,8 @@ in  { ComposeConfig
     , Service
     , ServiceVolume
     , ServiceVolumeLong
+    , ServiceNetwork
+    , ServiceNetworks
     , StringOrNumber
     , Deploy
     , Build
@@ -198,6 +210,7 @@ in  { ComposeConfig
     , Healthcheck
     , Labels
     , Logging
+    , Network
     , Networks
     , Ulimits
     , Volumes
