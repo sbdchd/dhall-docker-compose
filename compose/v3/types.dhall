@@ -133,6 +133,7 @@ let Service
       , hostname : Optional Text
       , image : Optional Text
       , ipc : Optional Text
+      , runtime : Optional Text
       , labels : Optional Labels
       , links : Optional (List Text)
       , logging : Optional Logging

@@ -42,6 +42,7 @@ let Service =
         , hostname = None Text
         , image = None Text
         , ipc = None Text
+        , runtime = None Text
         , labels = None types.Labels
         , links = None (List Text)
         , logging = None types.Logging
