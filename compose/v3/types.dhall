@@ -83,6 +83,19 @@ let Deploy
       , placement : { constraints : List Text }
       }
 
+let ServiceSecretLong
+    : Type
+    = { source : Optional Text
+      , target : Optional Text
+      , uid : Optional Natural
+      , gid : Optional Natural
+      , mode : Optional Text
+      }
+
+let ServiceSecret
+    : Type
+    = < Short : Text | Long : ServiceSecretLong >
+
 let ServiceVolumeLong
     : Type
     = { type : Optional Text
@@ -145,6 +158,7 @@ let Service
       , privileged : Optional Bool
       , read_only : Optional Bool
       , restart : Optional Text
+      , secrets : Optional (List ServiceSecret)
       , security_opt : Optional (List Text)
       , shm_size : Optional StringOrNumber
       , sysctls : Optional ListOrDict
@@ -184,6 +198,18 @@ let Volumes
     : Type
     = Map Text (Optional Volume)
 
+let Secret
+    : Type
+    = { file : Optional Text
+      , environment : Optional Text
+      , external : Optional Bool
+      , name : Optional Text
+      }
+
+let Secrets
+    : Type
+    = Map Text (Optional Secret)
+
 let Services
     : Type
     = Map Text Service
@@ -191,14 +217,19 @@ let Services
 let ComposeConfig
     : Type
     = { version : Text
+      , secrets : Optional Secrets
       , services : Optional Services
       , networks : Optional Networks
       , volumes : Optional Volumes
       }
 
 in  { ComposeConfig
+    , Secret
+    , Secrets
     , Services
     , Service
+    , ServiceSecret
+    , ServiceSecretLong
     , ServiceVolume
     , ServiceVolumeLong
     , ServiceNetwork

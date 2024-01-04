@@ -13,6 +13,14 @@ let ServiceVolumeLong =
       , tmpfs = None { size : Optional Text }
       }
 
+let ServiceSecretLong =
+      { source = None Text
+      , target = None Text
+      , uid = None Natural
+      , gid = None Natural
+      , mode = None Text
+      }
+
 let ServiceNetwork =
       { aliases = None (List Text)
       , ipv4_address = None Text
@@ -54,6 +62,7 @@ let Service =
         , privileged = None Bool
         , read_only = None Bool
         , restart = None Text
+        , secrets = None (List types.ServiceSecret)
         , security_opt = None (List Text)
         , shm_size = None types.StringOrNumber
         , sysctls = None types.ListOrDict
@@ -71,6 +80,14 @@ let Service =
       : types.Service
 
 let Network = { external = None Bool, name = None Text }
+
+let Secret =
+        { file = None Text
+        , environment = None Text
+        , external = None Bool
+        , name = None Text
+        }
+      : types.Secret
 
 let Volume =
         { driver = None Text
@@ -94,10 +111,13 @@ let ComposeConfig =
         , services = None types.Services
         , networks = None types.Networks
         , volumes = None types.Volumes
+        , secrets = None types.Secrets
         }
       : types.ComposeConfig
 
-in  { ServiceVolumeLong
+in  { Secret
+    , ServiceSecretLong
+    , ServiceVolumeLong
     , ServiceNetwork
     , Service
     , Network
