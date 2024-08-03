@@ -216,8 +216,7 @@ let Services
 
 let ComposeConfig
     : Type
-    = { version : Text
-      , secrets : Optional Secrets
+    = { secrets : Optional Secrets
       , services : Optional Services
       , networks : Optional Networks
       , volumes : Optional Volumes
