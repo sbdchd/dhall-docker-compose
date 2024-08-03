@@ -107,8 +107,7 @@ let Healthcheck =
       : types.Healthcheck
 
 let ComposeConfig =
-        { version = "3"
-        , services = None types.Services
+        { services = None types.Services
         , networks = None types.Networks
         , volumes = None types.Volumes
         , secrets = None types.Secrets

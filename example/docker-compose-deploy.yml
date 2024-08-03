@@ -69,7 +69,6 @@ services:
         tag: "{{.Name}}"
     volumes:
       - react-static-files:/var/app/dist
-version: '3'
 volumes:
   django-static-files:
     driver: local
