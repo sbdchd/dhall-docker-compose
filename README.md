@@ -38,3 +38,7 @@ dhall-to-yaml --file example/docker-compose-deploy.dhall --output ./example/dock
 ```
 
 Note that the yaml keys are alphabetized in the generated yaml.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
